@@ -24,7 +24,7 @@ However, there are different other codes which has different meaning.
 If visualised properly one can see that the network of the website links can be represented as a directed graph data structure where each links act as a node. Visiting each link is nothing but traversing through this graph. This project the graph traversal was implemented using breadth first search. In this traversal algorithm one node is selected and then all of the adjacent nodes are visited one by one. After completing all of the adjacent vertices, it moves further to check another vertex and checks its adjacent vertices again. Also, we should make sure that the already visited links should not be visited again and again. Hence to maintain redundancy we use queue data structure to keep track of all visited links.
 
 
-#### The Web Apllication Sample Screenshot: 
+#### Sample screenshot of the web application: 
 
 
 ![blf](https://user-images.githubusercontent.com/67074796/123315851-cfc42800-d549-11eb-9e3a-320c40426adc.PNG)
