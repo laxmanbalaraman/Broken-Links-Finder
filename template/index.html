@@ -1,0 +1,461 @@
+{% load static %}
+<html>
+  <head>
+    <title>Broken links finder</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+
+<script type="text/javascript">
+
+const queryString = window.location.search;
+console.log(queryString);
+
+function show(){
+  console.log(queryString)
+  if(queryString != ''){
+    console.log("Yes");
+    var stats = document.getElementById('stats');
+    var urltable = document.getElementById('urltable');
+    var download = document.getElementById('download');
+    console.log("stats");
+    stats.style.display = "block";
+    urltable.style.display = "block";
+    download.style.display = "block";
+
+    function download_txt() {
+      var link = document.getElementsByClassName('link')
+      var statusCode = document.getElementsByClassName('statusCode')
+      links = []
+      for (var i = 0; i < link.length; i++){
+      links.push([link[i].innerHTML, statusCode[i].innerHTML]);
+      }
+      console.log(links);
+      var csv = 'Link Name, Error Code\n';
+    links.forEach(function(row) {
+            csv += row.join(',');
+            csv += "\n";
+    });
+
+
+      var hiddenElement = document.createElement('a');
+
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'brokenLinks.csv';
+      hiddenElement.click();
+    }
+
+    document.getElementById('download-btn').addEventListener('click', download_txt);
+
+  }
+}
+
+</script>
+
+
+  </head>
+  <style>
+
+    html,
+    body,
+    header,
+    .view {
+      height: 100%;
+    }
+
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 1000px;
+      }
+    }
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 600px;
+      }
+    }
+    body{
+      background-color: white !important;
+    }
+    .btn .fa {
+      margin-left: 3px;
+    }
+
+    .top-nav-collapse {
+      background-color: #424f95 !important;
+    }
+
+    .navbar:not(.top-nav-collapse) {
+      background: transparent !important;
+    }
+
+    @media (max-width: 991px) {
+     .navbar:not(.top-nav-collapse) {
+      background: #424f95 !important;
+     }
+    }
+
+    .btn-white {
+      color: black !important;
+    }
+
+    h6 {
+      line-height: 1.7;
+    }
+
+    .rgba-gradient {
+      background: -moz-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+      background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+      background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
+      background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+      background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+    }
+    table tbody tr:hover td, table tbody tr:hover th {
+  background-color: #d6e6ff;
+  transition: 0.5s;
+}
+  td a{
+    color: #1954b0 !important;
+  }
+  td{
+    text-align: center;
+  }
+
+  .loadtext {
+  position: relative;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 4px;
+  overflow: hidden;
+  font-weight: 500;
+  background: linear-gradient(90deg, #fff, #fff);
+  background-repeat: no-repeat;
+  animation: animate 10s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+
+  </style>
+<body onload="show()">
+  <!-- Main navigation -->
+  <header>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <strong>Broken Links Finder</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+          aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-7">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Full Page Intro -->
+    <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/architecture.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+      <!-- Mask & flexbox options-->
+      <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+        <!-- Content -->
+        <div class="container">
+          <!--Grid row-->
+          <div class="row">
+            <!--Grid column-->
+            <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
+              <h1 class="h1-responsive font-weight-bold mt-sm-5">The Broken Links Finder </h1>
+              <hr class="hr-light">
+              <h6 class="mb-4">Broken links are bad for business! Get rid of it as soon as possible. Our system has
+              a unique web crawling bot which can find all the broken link present in your website in minutes.</h6>
+                <form  action="find">
+
+                  <input type="text" name="base_url" placeholder="Enter your website URL" id="exampleForm2" required class="form-control"><br>
+                <center> <a href="#table"> <button type="submit" onclick="show()"   class="btn btn-cyan ">Find dead links</button></a> </center>
+                </form>
+
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-md-6 col-xl-6 mt-xl-5 wow fadeInRight" data-wow-delay="0.3s">
+
+              <img src="static/images/error.png" alt="" class="img-fluid">
+
+            </div>
+
+            <!--Grid column-->
+          </div>
+
+          <!--Grid row-->
+        </div>
+        <!-- Content -->
+      </div>
+      <!-- Mask & flexbox options-->
+    </div>
+    <!-- Full Page Intro -->
+  </header>
+  <!-- Main navigation -->
+  <!-- Navigation -->
+
+<div class="container my-5">
+
+
+  <!--Section: Content-->
+  <section style="display:none;" id="stats" class="p-5 z-depth-1">
+
+    <h3 class="text-center font-weight-bold mb-5">Stats</h3>
+
+    <div class="row d-flex justify-content-center">
+
+      <div class="col-md-6 col-lg-3 mb-4 text-center">
+        <h4 class="h1 font-weight-normal mb-3">
+          <i class="fas fa-file-alt indigo-text"></i>
+          <span class="d-inline-block count-up" data-from="0" data-to="100" data-time="2000">{{total}}</span>
+        </h4>
+        <p class="font-weight-normal text-muted">Total links</p>
+      </div>
+
+      <div class="col-md-6 col-lg-3 mb-4 text-center">
+        <h4 class="h1 font-weight-normal mb-3">
+          <i class="fas fa-layer-group indigo-text"></i>
+          <span class="d-inline-block count1" data-from="0" data-to="250" data-time="2000">{{healthy}}</span>
+        </h4>
+        <p class="font-weight-normal text-muted">healthy links</p>
+      </div>
+
+      <div class="col-md-6 col-lg-3 mb-4 text-center">
+        <h4 class="h1 font-weight-normal mb-3">
+          <i class="fas fa-pencil-ruler indigo-text"></i>
+          <span class="d-inline-block count2" data-from="0" data-to="330" data-time="2000">{{err}}</span>
+        </h4>
+        <p class="font-weight-normal text-muted">Broken links</p>
+      </div>
+
+      <div class="col-md-6 col-lg-3 mb-4 text-center">
+        <h4 class="h1 font-weight-normal mb-3">
+          <i class="fas fa-percentage indigo-text"></i>
+          <span class="d-inline-block count3" data-from="0" data-to="430" data-time="2000">{{per}}</span>
+        </h4>
+        <p class="font-weight-normal text-muted">Percentage healthy</p>
+      </div>
+
+    </div>
+
+  </section>
+  <!--Section: Content-->
+
+
+</div>
+
+  <div  id="urltable" style="display:none;" class="urltable">
+    <table class="table" id="linktable" style="word-wrap: break-word;">
+  <thead class="indigo white-text">
+    <tr>
+      <th scope="col" style="text-align:center;">Broken Links</th>
+      <th scope="col" style="text-align:center;">Error Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for url, status_code in result %}
+    <tr>
+    <td scope="row" > <a class="link" href="{{url}}" target="_blank">{{url}}</a></td>
+    <td scope="row" > <a class="statusCode"  >{{status_code}}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  </div>
+
+  <div id="download" style="display:none;" class="container py-5">
+
+
+      <!--Section: Content-->
+      <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+
+        <!--Grid row-->
+        <div class="row">
+
+          <!--Grid column-->
+          <div class="col-md-6 mb-4 mb-md-0">
+
+            <h3 class="font-weight-bold">Download your file</h3>
+
+            <p class="text-muted">We have created a file which contains all the broken links in your website, for your further analysis. Get rid of it
+            as soon as possible. Click the download button below.</p>
+
+            <a class="btn btn-indigo btn-md ml-0"  id="download-btn"role="button">Download file</i></a>
+
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-6 mb-4 mb-md-0">
+
+            <!--Image-->
+            <div class="view overlay z-depth-1-half">
+              <img src="static/images/introbg.png" class="img-fluid"
+                alt="">
+              <a href="#">
+                <div class="mask rgba-white-light"></div>
+              </a>
+            </div>
+
+          </div>
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+
+      </section>
+      <!--Section: Content-->
+
+
+    </div>
+    <div class="container py-5 my-5 ">
+  <section class="p-md-3 mx-md-5 text-lg-left">
+    <h2 class="font-weight-bold text-center mb-5 pb-3">Features</h2>
+    <div class="row text-center d-flex justify-content-center">
+      <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+        <i class="fas fa-code fa-3x indigo-text mb-4"></i>
+        <h4 class="font-weight-bold mb-4">Algorithm</h4>
+        <p class="text-muted px-2 mb-lg-0">
+          We Use Breadth first search algorithm for efficient graph traversal.
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+        <i class="fas fa-tachometer-alt pink-text fa-3x mb-4"></i>
+        <h4 class="font-weight-bold mb-4">Faster output</h4>
+        <p class="text-muted px-2 mb-lg-0">
+          We use python threading concept for concurrent execution of program.
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-md-0 mb-5">
+        <i class="fas fa-download fa-3x amber-text mb-4"></i>
+        <h4 class="font-weight-bold mb-4">Download file</h4>
+        <p class="text-muted px-2 mb-md-0">
+          You can download the broken links as a CSV file for your future analysis.
+        </p>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-md-0 mb-5">
+        <i class="fab fa-html5 fa-3x green-text mb-4"></i>
+        <h4 class="font-weight-bold mb-4">User-friendly</h4>
+        <p class="text-muted px-2 mb-md-0">
+          Our website is attractive, interactive and user-friendly.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="container my-5 py-5 z-depth-1">
+
+
+  <!--Section: Content-->
+  <section class="px-md-5 mx-md-5 text-center text-lg-left dark-grey-text">
+
+
+    <!--Grid row-->
+    <div class="row d-flex justify-content-center mb-4">
+
+      <!--Grid column-->
+      <div class="col-md-6 text-center">
+
+          <p class="font-weight-bold">contact@mycompany.com</p>
+
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut esse placeat odit dolor excepturi.</p>
+
+          <!--Facebook-->
+          <a href="#" class="mx-1" role="button"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-pinterest"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-github"></i></a>
+          <a href="#" class="mx-1" role="button"><i class="fab fa-stack-overflow"></i></a>
+
+
+      </div>
+      <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
+
+
+  </section>
+  <!--Section: Content-->
+
+
+</div>
+  <!-- Footer -->
+<footer class="page-footer font-small indigo darken-4 py-4">
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-6 d-flex justify-content-start">
+        <!-- Copyright -->
+        <div class="footer-copyright text-center bg-transparent">© 2019 Copyright:
+          19BCE1105 & 19BCE1758
+        </div>
+        <!-- Copyright -->
+      </div>
+      <div class="col-md-6 d-flex justify-content-end">
+        <ul class="list-unstyled d-flex mb-0">
+          <li>
+          	<a class="mr-3" role="button"><i class="fab fa-facebook-f"></i></a>
+          </li>
+          <li>
+          	<a class="mr-3" role="button"><i class="fab fa-twitter"></i></a>
+          </li>
+          <li>
+          	<a class="mr-3" role="button"><i class="fab fa-instagram"></i></a>
+          </li>
+          <li>
+          	<a class="" role="button"><i class="fab fa-youtube"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- Footer Elements -->
+
+</footer>
+<!-- Footer -->
+
+
+  </body>
+
+</html>

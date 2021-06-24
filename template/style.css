@@ -1,0 +1,45 @@
+body{
+  margin:0;
+  position: relative;
+  min-height: 100vh;
+
+}
+.introbg{
+  background-image: url(bg.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 30%;
+  width: 100%;
+  text-align: center;
+  color: white;
+
+}
+.introbg h1{
+  line-height: 200px;
+}
+.navbar-brand{
+  margin-left: 50px !important;
+}
+nav{
+  color: white !important;
+}
+.inputfield{
+  text-align: center;
+}
+.inputfield{
+padding: 130px 300px 130px 300px;
+}
+.footer{
+  bottom: 0px;
+  text-align: center;
+  background-color: black;
+  padding: 10px;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.info{
+  margin: 50px;
+}
